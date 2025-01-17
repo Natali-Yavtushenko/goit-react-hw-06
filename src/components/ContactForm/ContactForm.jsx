@@ -2,65 +2,79 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import s from "./Form.module.css";
 import React, { useId } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addContact } from "../../redux/contactsSlice";
+import { nanoid } from "@reduxjs/toolkit";
+import * as Yup from "yup";
 
 const ContactForm = () => {
   const NameFieldId = useId();
   const NumberFieldId = useId();
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contact.items);
+  const initialValues = { name: "", number: "" };
 
-  const handleSubmit = (values, { resetForm }) => {
-    const { name, number } = values;
-
-    if (contacts.find((contact) => contact.name === name)) {
-      alert(`${name} is already in contacts`);
-      return;
-    }
-    dispatch(addContact({ id: Date.now().toString(), name, number }));
+  function onSubmit(values, { resetForm }) {
+    const newContact = {
+      id: nanoid(),
+      name: values.name,
+      number: values.number,
+    };
+    dispatch(addContact(newContact));
     resetForm();
-  };
+  }
+
+  const registerSchema = Yup.object().shape({
+    Name: Yup.string()
+      .min(3, "Мінімум 3 символи")
+      .max(20, "Максимум 20 символів")
+      .matches(
+        /^[A-Za-zА-Яа-яЄєІіЇїҐґ]+$/,
+        "Це поле може містити тільки літери"
+      )
+      .required("Це поле обов'язкове!"),
+    Number: Yup.string()
+      .min(7, "Мінімум 7 символів")
+      .max(13, "Максимуму 13 символів")
+      .required("Це поле обов'язкове!"),
+  });
 
   return (
     <div className={s.formWrapper}>
-      <Formik initialValues={{ name: "", number: "" }} onSubmit={handleSubmit}>
-        {({ errors, touched }) => (
-          <Form className={s.form}>
-            <label className={s.label} htmlFor={NameFieldId}>
-              Name
-            </label>
-            <Field
-              className={s.field}
-              id={NameFieldId}
-              name="name"
-              placeholder="Anna"
-            />
-            {errors.name && touched.name ? <div>{errors.name}</div> : null}
-            <ErrorMessage name="name" component="div" />
+      <Formik
+        initialValues={initialValues}
+        onSubmit={onSubmit}
+        registerSchema={registerSchema}
+      >
+        <Form className={s.form}>
+          <label className={s.label} htmlFor={NameFieldId}>
+            Name
+          </label>
+          <Field
+            className={s.field}
+            id={NameFieldId}
+            name="name"
+            placeholder="Anna"
+          />
+          <ErrorMessage name="name" component="div" className={s.error} />
 
-            <label className={s.label} htmlFor={NumberFieldId}>
-              Number
-            </label>
-            <Field
-              className={s.field}
-              id={NumberFieldId}
-              name="number"
-              placeholder="7203578"
-              type="tel"
-              inputMode="numeric"
-              pattern="\d*"
-            />
-            {errors.number && touched.number ? (
-              <div>{errors.number}</div>
-            ) : null}
-            <ErrorMessage name="number" component="div" />
+          <label className={s.label} htmlFor={NumberFieldId}>
+            Number
+          </label>
+          <Field
+            className={s.field}
+            id={NumberFieldId}
+            name="number"
+            placeholder="7203578"
+            type="tel"
+            inputMode="numeric"
+            pattern="\d*"
+          />
+          <ErrorMessage name="number" component="div" className={s.error} />
 
-            <button className={s.button} type="submit">
-              Add contact
-            </button>
-          </Form>
-        )}
+          <button className={s.button} type="submit">
+            Add contact
+          </button>
+        </Form>
       </Formik>
     </div>
   );

@@ -6,11 +6,6 @@ import { changeFilter, selectFilter } from "../../redux/filtersSlice";
 
 const SearchBox = () => {
   const dispatch = useDispatch();
-  const filter = useSelector(selectFilter);
-
-  const handleChange = (event) => {
-    dispatch(changeFilter(event.target.value));
-  };
 
   return (
     <div className={s.wrapper}>
@@ -18,8 +13,7 @@ const SearchBox = () => {
       <input
         className={s.input}
         type="text"
-        value={filter}
-        onChange={handleChange}
+        onChange={(e) => dispatch(changeFilter(e.target.value))}
       />
     </div>
   );
