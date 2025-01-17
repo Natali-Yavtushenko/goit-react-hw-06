@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import s from "./Form.module.css";
 import React, { useId } from "react";

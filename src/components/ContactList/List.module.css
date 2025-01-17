@@ -16,19 +16,17 @@
   padding: 0;
 }
 
-.item {
-  width: 100%;
-  border: 1px solid black;
-  border-radius: 8px;
-  box-shadow: 2px 2px 4px 4px grey;
-  margin-bottom: 15px;
-}
-
 .containerItem {
   display: flex;
   align-items: center;
   position: relative;
   height: 100px;
+
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 8px;
+  box-shadow: 2px 2px 4px 4px grey;
+  margin-bottom: 15px;
 }
 
 .contact {

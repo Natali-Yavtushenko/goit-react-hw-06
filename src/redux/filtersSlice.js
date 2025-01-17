@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -7,7 +6,7 @@ const initialState = {
 
 const filtersSlice = createSlice({
   name: "filters",
-  initialState, 
+  initialState,
   reducers: {
     changeFilter: (state, action) => {
       state.name = action.payload;
@@ -15,7 +14,6 @@ const filtersSlice = createSlice({
   },
 });
 
-
-export const { changeFilter } = filtersSlice.actions; 
-export const selectFilter = (state) => state.filters.name; 
-export default filtersSlice.reducer; 
+export const { changeFilter } = filtersSlice.actions;
+export const selectFilter = (state) => state.filters.name;
+export default filtersSlice.reducer;
