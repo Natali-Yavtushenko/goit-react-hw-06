@@ -7,9 +7,11 @@ import { selectFilter } from "../../redux/filtersSlice";
 const ContactList = () => {
   const contacts = useSelector(selectContact);
   const filter = useSelector(selectFilter);
-  const filteredData = contacts.filters((contact) =>
-    contact.item.includes(filter)
+  const filteredData = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
   );
+  console.log(filteredData);
+
   return (
     <div className={s.container}>
       <ul className={s.list}>

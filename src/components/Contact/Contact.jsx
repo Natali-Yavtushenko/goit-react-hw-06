@@ -5,6 +5,8 @@ import { deleteContact } from "../../redux/contactsSlice";
 
 const Contact = ({ id, name, number }) => {
   const dispatch = useDispatch();
+  console.log({ id, name, number });
+
   return (
     <div className={s.containerItem}>
       <div className={s.contact}>

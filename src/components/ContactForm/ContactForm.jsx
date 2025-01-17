@@ -43,7 +43,7 @@ const ContactForm = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={onSubmit}
-        registerSchema={registerSchema}
+        validationSchem={registerSchema}
       >
         <Form className={s.form}>
           <label className={s.label} htmlFor={NameFieldId}>
