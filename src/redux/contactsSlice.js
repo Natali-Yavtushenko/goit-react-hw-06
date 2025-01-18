@@ -23,7 +23,6 @@ const contactsSlice = createSlice({
         (contact) => contact.id !== action.payload
       );
     },
-    changeContact(state, action) {},
   },
 });
 export const selectContact = (state) => state.contacts.contacts.items;
